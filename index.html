@@ -1,12 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Update</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Kiln Tech Daily Update Generator</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  body {
+    background: #f6f1ea;
+    color: #2f2a26;
+    font-family: Inter, sans-serif;
+  }
+
+  .serif {
+    font-family: Georgia, serif;
+  }
+
+  .entry-item {
+    border-top: 1px solid #d7cdc1;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .preview-wrapper {
+    background: white;
+    max-width: 760px;
+    margin: auto;
+    padding: 48px;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  }
+
+  .thumbnail {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    flex-shrink: 0;
+  }
+
+  .section-divider {
+    border-top: 1px solid #c7b8a5;
+    margin-top: 10px;
+    margin-bottom: 6px;
+  }
+
+  .btn-link {
+    color: #8a7157;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+</style>
 </head>
-<body>
-    <h1>Welcome</h1>
-    <p>This is the index page.</p>
+
+<body class="min-h-screen p-8">
+
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+  <!-- LEFT PANEL -->
+  <div>
+
+    <h1 class="text-4xl serif mb-2">Kiln Tech</h1>
+    <p class="text-sm text-gray-600 mb-8">
+      Daily Update Email Generator
+    </p>
+
+    <div class="space-y-6">
+
+      <!-- LOGO -->
+      <div>
+        <label class="block text-sm mb-2 font-medium">Logo Upload</label>
+        <input type="file" id="logoInput" accept="image/*" class="block w-full" />
+      </div>
+
+      <!-- DATE -->
+      <div>
+        <label class="block text-sm mb-2 font-medium">Date</label>
+        <input
+          type="text"
+          id="dateInput"
+          class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+        />
+      </div>
+
+      <!-- INTRO -->
+      <div>
+        <label class="block text-sm mb-2 font-medium">Intro</label>
+        <textarea
+          id="introInput"
+          class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          rows="2"
+        >Hola a todos,</textarea>
+      </div>
+
+      <!-- ENTRY CONTROLS -->
+      <div class="border-t border-gray-300 pt-6">
+
+        <h2 class="text-xl serif mb-4">Add Entry</h2>
+
+        <div class="space-y-4">
+
+          <select
+            id="sectionInput"
+            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          >
+            <option>Completed</option>
+            <option>In Progress</option>
+            <option>Notes</option>
+          </select>
+
+          <input
+            type="text"
+            id="titleInput"
+            placeholder="Entry Title"
+            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          />
+
+          <textarea
+            id="descriptionInput"
+            placeholder="Brief explanation..."
+            rows="3"
+            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          ></textarea>
+
+          <input
+            type="text"
+            id="buttonTextInput"
+            placeholder="Button Text (optional)"
+            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          />
+
+          <input
+            type="text"
+            id="buttonLinkInput"
+            placeholder="Button Link (optional)"
+            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          />
+
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            class="block w-full"
+          />
+
+          <button
+            id="addEntryBtn"
+            class="w-full bg-[#a8b39e] hover:bg-[#97a38d] text-white rounded-lg py-3 transition"
+          >
+            Add Entry
+          </button>
+
+        </div>
+      </div>
+
+      <!-- EXPORT -->
+      <div class="border-t border-gray-300 pt-6 space-y-3">
+
+        <button
+          id="copyHtmlBtn"
+          class="w-full bg-[#b58b67] hover:bg-[#a37a58] text-white rounded-lg py-3 transition"
+        >
+          Copy Email HTML
+        </button>
+
+        <button
+          id="downloadBtn"
+          class="w-full bg-black hover:bg-gray-800 text-white rounded-lg py-3 transition"
+        >
+          Download HTML File
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div>
+
+    <div class="preview-wrapper" id="preview">
+
+      <div id="previewContent"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const entries = [];
+
+const previewContent = document.getElementById("previewContent");
+
+const logoInput = document.getElementById("logoInput");
+const dateInput = document.getElementById("dateInput");
+const introInput = document.getElementById("introInput");
+
+const sectionInput = document.getElementById("sectionInput");
+const titleInput = document.getElementById("titleInput");
+const descriptionInput = document.getElementById("descriptionInput");
+const buttonTextInput = document.getElementById("buttonTextInput");
+const buttonLinkInput = document.getElementById("buttonLinkInput");
+const imageInput = document.getElementById("imageInput");
+
+let logoData = "";
+
+function getFormattedDate() {
+  const options = {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric'
+  };
+
+  return new Date().toLocaleDateString('en-US', options);
+}
+
+dateInput.value = getFormattedDate();
+
+logoInput.addEventListener("change", function() {
+  const file = this.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    logoData = e.target.result;
+    renderPreview();
+  };
+
+  reader.readAsDataURL(file);
+});
+
+document.getElementById("addEntryBtn").addEventListener("click", () => {
+
+  const file = imageInput.files[0];
+
+  if (file) {
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+      entries.push({
+        section: sectionInput.value,
+        title: titleInput.value,
+        description: descriptionInput.value,
+        buttonText: buttonTextInput.value,
+        buttonLink: buttonLinkInput.value,
+        image: e.target.result
+      });
+
+      clearInputs();
+      renderPreview();
+    };
+
+    reader.readAsDataURL(file);
+
+  } else {
+
+    entries.push({
+      section: sectionInput.value,
+      title: titleInput.value,
+      description: descriptionInput.value,
+      buttonText: buttonTextInput.value,
+      buttonLink: buttonLinkInput.value,
+      image: ""
+    });
+
+    clearInputs();
+    renderPreview();
+  }
+
+});
+
+function clearInputs() {
+  titleInput.value = "";
+  descriptionInput.value = "";
+  buttonTextInput.value = "";
+  buttonLinkInput.value = "";
+  imageInput.value = "";
+}
+
+function renderSection(sectionName) {
+
+  const filtered = entries.filter(e => e.section === sectionName);
+
+  if (!filtered.length) return "";
+
+  return `
+    <div style="margin-top:40px;">
+
+      <div style="
+        font-size:20px;
+        font-family:Georgia, serif;
+        margin-bottom:8px;
+      ">
+        ${sectionName}
+      </div>
+
+      <div style="
+        border-top:1px solid #c7b8a5;
+        margin-bottom:8px;
+      "></div>
+
+      ${filtered.map(entry => `
+        <div style="
+          padding:18px 0;
+          border-top:1px solid #ece5dc;
+          display:flex;
+          gap:18px;
+          justify-content:space-between;
+          align-items:flex-start;
+        ">
+
+          <div style="flex:1; min-width:0;">
+
+            <div style="
+              font-size:17px;
+              margin-bottom:6px;
+              color:#2f2a26;
+              font-weight:500;
+            ">
+              ${entry.title}
+            </div>
+
+            <div style="
+              font-size:14px;
+              line-height:1.6;
+              color:#5d544c;
+              margin-bottom:8px;
+            ">
+              ${entry.description}
+            </div>
+
+            ${
+              entry.buttonText && entry.buttonLink
+              ? `
+              <a
+                href="${entry.buttonLink}"
+                target="_blank"
+                style="
+                  color:#8a7157;
+                  text-decoration:none;
+                  font-size:14px;
+                  font-weight:500;
+                "
+              >
+                ${entry.buttonText} →
+              </a>
+              `
+              : ""
+            }
+
+          </div>
+
+          ${
+            entry.image
+            ? `
+            <a href="${entry.image}" target="_blank">
+              <img
+                src="${entry.image}"
+                style="
+                  width:90px;
+                  height:90px;
+                  object-fit:cover;
+                  border-radius:8px;
+                  border:1px solid #ddd;
+                "
+              />
+            </a>
+            `
+            : ""
+          }
+
+        </div>
+      `).join("")}
+
+    </div>
+  `;
+}
+
+function renderPreview() {
+
+  previewContent.innerHTML = `
+
+    ${
+      logoData
+      ? `
+      <img
+        src="${logoData}"
+        style="
+          max-width:220px;
+          margin-bottom:40px;
+        "
+      />
+      `
+      : ""
+    }
+
+    <div style="
+      font-size:14px;
+      color:#8a7d72;
+      margin-bottom:32px;
+    ">
+      ${dateInput.value}
+    </div>
+
+    <div style="
+      font-size:16px;
+      margin-bottom:28px;
+      line-height:1.7;
+    ">
+      ${introInput.value}
+    </div>
+
+    ${renderSection("Completed")}
+    ${renderSection("In Progress")}
+    ${renderSection("Notes")}
+
+    <div style="
+      margin-top:50px;
+      line-height:1.8;
+      color:#4b433d;
+    ">
+      Gracias,<br><br>
+      – Porter
+    </div>
+
+  `;
+}
+
+renderPreview();
+
+document.getElementById("copyHtmlBtn").addEventListener("click", () => {
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<body style="
+  background:#f6f1ea;
+  padding:40px;
+  font-family:Arial,sans-serif;
+  color:#2f2a26;
+">
+
+<div style="
+  max-width:760px;
+  margin:auto;
+  background:white;
+  padding:48px;
+">
+
+${previewContent.innerHTML}
+
+</div>
+
+</body>
+</html>
+`;
+
+  navigator.clipboard.writeText(html);
+
+  alert("Email HTML copied to clipboard.");
+
+});
+
+document.getElementById("downloadBtn").addEventListener("click", () => {
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<body style="
+  background:#f6f1ea;
+  padding:40px;
+  font-family:Arial,sans-serif;
+  color:#2f2a26;
+">
+
+<div style="
+  max-width:760px;
+  margin:auto;
+  background:white;
+  padding:48px;
+">
+
+${previewContent.innerHTML}
+
+</div>
+
+</body>
+</html>
+`;
+
+  const blob = new Blob([html], { type: "text/html" });
+
+  const a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download = "kiln-tech-update.html";
+
+  a.click();
+
+});
+
+</script>
+
 </body>
 </html>

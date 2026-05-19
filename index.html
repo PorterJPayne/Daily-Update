@@ -2,200 +2,401 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>Kiln Tech Daily Update Generator</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    background: #f6f1ea;
-    color: #2f2a26;
-    font-family: Inter, sans-serif;
-  }
 
-  .serif {
-    font-family: Georgia, serif;
-  }
+:root{
+  --cream:#f6f1ea;
+  --sage:#7f9071;
+  --light-sage:#dfe5d8;
+  --brown:#b47c4d;
+  --text:#2d2926;
+  --muted:#7d746c;
+  --line:#ddd4ca;
+}
 
-  .entry-item {
-    border-top: 1px solid #d7cdc1;
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
+body{
+  background:var(--cream);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+}
 
-  .preview-wrapper {
-    background: white;
-    max-width: 760px;
-    margin: auto;
-    padding: 48px;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-  }
+.serif{
+  font-family:'Cormorant Garamond',serif;
+}
 
-  .thumbnail {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    flex-shrink: 0;
-  }
+input,
+textarea,
+select{
+  transition:all .2s ease;
+}
 
-  .section-divider {
-    border-top: 1px solid #c7b8a5;
-    margin-top: 10px;
-    margin-bottom: 6px;
-  }
+input:focus,
+textarea:focus,
+select:focus{
+  outline:none;
+  border-color:var(--sage);
+  box-shadow:0 0 0 3px rgba(127,144,113,.1);
+}
 
-  .btn-link {
-    color: #8a7157;
-    font-size: 14px;
-    text-decoration: none;
-    font-weight: 500;
-  }
+.email-preview{
+  background:white;
+  border:1px solid #e7dfd6;
+  border-radius:12px;
+  padding:72px;
+}
 
-  .btn-link:hover {
-    text-decoration: underline;
-  }
+.entry{
+  border-top:1px solid #ece6de;
+  padding:22px 0;
+}
 
-  textarea {
-    resize: vertical;
-  }
+.thumb{
+  width:110px;
+  height:86px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid #e7dfd6;
+  flex-shrink:0;
+}
+
+.action-btn{
+  border-radius:10px;
+  transition:.2s ease;
+}
+
+.action-btn:hover{
+  transform:translateY(-1px);
+}
+
+.small-label{
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:12px;
+  color:#6d655f;
+  font-weight:600;
+}
+
+.edit-btn{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:6px;
+  background:#efebe5;
+}
+
+.edit-btn:hover{
+  background:#e5ddd3;
+}
+
+.delete-btn{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:6px;
+  background:#f4e1de;
+}
+
+.delete-btn:hover{
+  background:#ebd1cd;
+}
+
+.section-title{
+  font-size:18px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--sage);
+  font-weight:500;
+}
+
+.section-line{
+  border-top:1px solid #cdbfae;
+}
+
+textarea{
+  resize:vertical;
+}
+
 </style>
 </head>
 
-<body class="min-h-screen p-8">
+<body class="min-h-screen px-8 py-10">
 
-<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+<div class="max-w-[1600px] mx-auto grid grid-cols-1 xl:grid-cols-[420px_1fr] gap-10">
 
   <!-- LEFT PANEL -->
   <div>
 
-    <h1 class="text-4xl serif mb-2">Kiln Tech</h1>
-    <p class="text-sm text-gray-600 mb-8">
-      Daily Update Email Generator
-    </p>
+    <!-- HEADER -->
+    <div class="mb-10">
 
-    <div class="space-y-6">
+      <img
+        id="sidebarLogo"
+        src=""
+        class="w-[290px] mb-5 hidden"
+      />
+
+      <h1 class="serif text-7xl leading-none mb-4">
+        kiln<span class="mx-3">|</span>TECH.
+      </h1>
+
+      <div class="tracking-[0.25em] uppercase text-sm text-[#7b736c]">
+        Daily Update Generator
+      </div>
+
+    </div>
+
+    <!-- FORM -->
+    <div class="bg-[#f8f5f1] border border-[#e7dfd6] rounded-xl p-8">
 
       <!-- LOGO -->
-      <div>
-        <label class="block text-sm mb-2 font-medium">Logo Upload</label>
-        <input type="file" id="logoInput" accept="image/*" class="block w-full" />
+      <div class="mb-8">
+
+        <div class="small-label mb-3">
+          1. Logo
+        </div>
+
+        <label class="border border-dashed border-[#d7cdc1] rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:bg-[#f2ede7] transition">
+
+          <div class="text-2xl mb-2">
+            ↑
+          </div>
+
+          <div class="font-medium mb-1">
+            Upload Logo
+          </div>
+
+          <div class="text-sm text-[#7d746c]">
+            PNG or JPG
+          </div>
+
+          <input type="file" id="logoInput" accept="image/*" class="hidden">
+
+        </label>
+
       </div>
 
       <!-- DATE -->
-      <div>
-        <label class="block text-sm mb-2 font-medium">Date</label>
+      <div class="mb-8">
+
+        <div class="small-label mb-3">
+          2. Date
+        </div>
+
         <input
-          type="text"
           id="dateInput"
-          class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          type="text"
+          class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
         />
+
       </div>
 
       <!-- INTRO -->
-      <div>
-        <label class="block text-sm mb-2 font-medium">Intro</label>
+      <div class="mb-8">
+
+        <div class="small-label mb-3">
+          3. Intro
+        </div>
+
         <textarea
           id="introInput"
-          class="w-full border border-gray-300 rounded-lg p-3 bg-white"
-          rows="2"
+          rows="3"
+          class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
         >Hola a todos,</textarea>
+
       </div>
 
-      <!-- ENTRY CONTROLS -->
-      <div class="border-t border-gray-300 pt-6">
+      <div class="border-t border-[#ddd4ca] my-8"></div>
 
-        <h2 class="text-xl serif mb-4">Add Entry</h2>
+      <!-- ENTRY -->
+      <div>
+
+        <div class="small-label mb-5">
+          4. Add Entry
+        </div>
+
+        <div class="space-y-5">
+
+          <div>
+            <div class="small-label mb-2">Section</div>
+
+            <select
+              id="sectionInput"
+              class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
+            >
+              <option>Completed</option>
+              <option>In Progress</option>
+              <option>Notes</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="small-label mb-2">Title</div>
+
+            <input
+              id="titleInput"
+              type="text"
+              placeholder="Entry title"
+              class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
+            />
+          </div>
+
+          <div>
+            <div class="small-label mb-2">Description</div>
+
+            <textarea
+              id="descriptionInput"
+              rows="4"
+              placeholder="Brief explanation..."
+              class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
+            ></textarea>
+          </div>
+
+          <div>
+            <div class="small-label mb-2">
+              Link Text (optional)
+            </div>
+
+            <input
+              id="buttonTextInput"
+              type="text"
+              placeholder="View more"
+              class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
+            />
+          </div>
+
+          <div>
+            <div class="small-label mb-2">
+              Link URL (optional)
+            </div>
+
+            <input
+              id="buttonLinkInput"
+              type="text"
+              placeholder="https://example.com"
+              class="w-full bg-white border border-[#ddd4ca] rounded-xl px-5 py-4 text-[15px]"
+            />
+          </div>
+
+          <!-- IMAGE -->
+          <div>
+
+            <div class="small-label mb-2">
+              Image (optional)
+            </div>
+
+            <label class="bg-[#edf1e7] border border-[#d7dfcc] rounded-xl p-7 flex flex-col items-center justify-center cursor-pointer hover:bg-[#e7ecdf] transition">
+
+              <div class="text-2xl text-[#748367] mb-2">
+                ↑
+              </div>
+
+              <div class="font-medium text-[#4d5944] mb-1">
+                Upload Image
+              </div>
+
+              <div class="text-sm text-[#76806e]">
+                JPG or PNG
+              </div>
+
+              <input type="file" id="imageInput" accept="image/*" class="hidden">
+
+            </label>
+
+          </div>
+
+          <!-- BUTTONS -->
+          <div class="flex gap-4 pt-2">
+
+            <button
+              id="addEntryBtn"
+              class="flex-1 bg-[#7f9071] hover:bg-[#738266] text-white py-4 rounded-xl action-btn text-[15px] font-medium"
+            >
+              + Add Entry
+            </button>
+
+            <button
+              id="clearBtn"
+              class="px-8 border border-[#ddd4ca] rounded-xl hover:bg-[#f2ede7] transition"
+            >
+              Clear
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ENTRY LIST -->
+      <div id="entryList" class="mt-10 space-y-3"></div>
+
+      <div class="border-t border-[#ddd4ca] my-8"></div>
+
+      <!-- EXPORT -->
+      <div>
+
+        <div class="small-label mb-5">
+          5. Export
+        </div>
 
         <div class="space-y-4">
 
-          <select
-            id="sectionInput"
-            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
+          <button
+            id="copyBtn"
+            class="w-full bg-[#b47c4d] hover:bg-[#a16f46] text-white py-4 rounded-xl action-btn text-[15px] font-medium"
           >
-            <option>Completed</option>
-            <option>In Progress</option>
-            <option>Notes</option>
-          </select>
-
-          <input
-            type="text"
-            id="titleInput"
-            placeholder="Entry Title"
-            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
-          />
-
-          <textarea
-            id="descriptionInput"
-            placeholder="Brief explanation..."
-            rows="3"
-            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
-          ></textarea>
-
-          <input
-            type="text"
-            id="buttonTextInput"
-            placeholder="Button Text (optional)"
-            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
-          />
-
-          <input
-            type="text"
-            id="buttonLinkInput"
-            placeholder="Button Link (optional)"
-            class="w-full border border-gray-300 rounded-lg p-3 bg-white"
-          />
-
-          <input
-            type="file"
-            id="imageInput"
-            accept="image/*"
-            class="block w-full"
-          />
+            Copy HTML
+          </button>
 
           <button
-            id="addEntryBtn"
-            class="w-full bg-[#a8b39e] hover:bg-[#97a38d] text-white rounded-lg py-3 transition"
+            id="downloadBtn"
+            class="w-full border border-[#d9c8b7] hover:bg-[#f2ece5] py-4 rounded-xl action-btn text-[15px] font-medium text-[#8c603c]"
           >
-            Add Entry
+            Download HTML
           </button>
 
         </div>
-      </div>
-
-      <!-- EXPORT -->
-      <div class="border-t border-gray-300 pt-6 space-y-3">
-
-        <button
-          id="copyHtmlBtn"
-          class="w-full bg-[#b58b67] hover:bg-[#a37a58] text-white rounded-lg py-3 transition"
-        >
-          Copy Email HTML
-        </button>
-
-        <button
-          id="downloadBtn"
-          class="w-full bg-black hover:bg-gray-800 text-white rounded-lg py-3 transition"
-        >
-          Download HTML File
-        </button>
 
       </div>
 
     </div>
+
   </div>
 
   <!-- PREVIEW -->
   <div>
 
-    <div class="preview-wrapper" id="preview">
+    <div class="flex items-center justify-center gap-16 mb-6">
+
+      <div class="flex items-center gap-3 border-b-2 border-[#7f9071] pb-3 px-4">
+        <span>◉</span>
+        <span class="font-medium tracking-wide">PREVIEW</span>
+      </div>
+
+      <div class="flex items-center gap-3 opacity-50">
+        <span>&lt;/&gt;</span>
+        <span class="font-medium tracking-wide">HTML</span>
+      </div>
+
+    </div>
+
+    <div class="email-preview max-w-[900px] mx-auto">
 
       <div id="previewContent"></div>
 
+    </div>
+
+    <div class="text-center mt-7 text-[#7d746c] text-[15px]">
+      Designed for clean updates. Built for builders.
     </div>
 
   </div>
@@ -204,7 +405,9 @@
 
 <script>
 
-const entries = [];
+let entries = [];
+let editingIndex = null;
+let logoData = "";
 
 const previewContent = document.getElementById("previewContent");
 
@@ -219,133 +422,267 @@ const buttonTextInput = document.getElementById("buttonTextInput");
 const buttonLinkInput = document.getElementById("buttonLinkInput");
 const imageInput = document.getElementById("imageInput");
 
-let logoData = "";
+function formattedDate(){
 
-function getFormattedDate() {
   const options = {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric'
+    weekday:'short',
+    month:'short',
+    day:'numeric'
   };
 
-  return new Date().toLocaleDateString('en-US', options);
+  return new Date().toLocaleDateString('en-US',options);
+
 }
 
-dateInput.value = getFormattedDate();
+dateInput.value = formattedDate();
 
-logoInput.addEventListener("change", function() {
-  const file = this.files[0];
+logoInput.addEventListener("change",e=>{
 
-  if (!file) return;
+  const file = e.target.files[0];
+  if(!file) return;
 
   const reader = new FileReader();
 
-  reader.onload = function(e) {
-    logoData = e.target.result;
+  reader.onload = function(event){
+
+    logoData = event.target.result;
+
+    document.getElementById("sidebarLogo").src = logoData;
+    document.getElementById("sidebarLogo").classList.remove("hidden");
+
     renderPreview();
+
   };
 
   reader.readAsDataURL(file);
+
 });
 
-document.getElementById("addEntryBtn").addEventListener("click", () => {
+function compressImage(file, callback){
+
+  const reader = new FileReader();
+
+  reader.onload = function(event){
+
+    const img = new Image();
+
+    img.onload = function(){
+
+      const canvas = document.createElement("canvas");
+
+      const maxWidth = 700;
+
+      const scale = maxWidth / img.width;
+
+      canvas.width = maxWidth;
+      canvas.height = img.height * scale;
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+      const compressed = canvas.toDataURL("image/jpeg",0.72);
+
+      callback(compressed);
+
+    };
+
+    img.src = event.target.result;
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+document.getElementById("addEntryBtn").addEventListener("click",()=>{
+
+  const saveEntry = (imageData="") => {
+
+    const entry = {
+      section:sectionInput.value,
+      title:titleInput.value,
+      description:descriptionInput.value,
+      buttonText:buttonTextInput.value,
+      buttonLink:buttonLinkInput.value,
+      image:imageData
+    };
+
+    if(editingIndex !== null){
+
+      entries[editingIndex] = entry;
+      editingIndex = null;
+
+      document.getElementById("addEntryBtn").innerText = "+ Add Entry";
+
+    } else {
+
+      entries.push(entry);
+
+    }
+
+    clearForm();
+    renderEntryList();
+    renderPreview();
+
+  };
 
   const file = imageInput.files[0];
 
-  if (file) {
+  if(file){
 
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-
-      entries.push({
-        section: sectionInput.value,
-        title: titleInput.value,
-        description: descriptionInput.value,
-        buttonText: buttonTextInput.value,
-        buttonLink: buttonLinkInput.value,
-        image: e.target.result
-      });
-
-      clearInputs();
-      renderPreview();
-    };
-
-    reader.readAsDataURL(file);
+    compressImage(file,saveEntry);
 
   } else {
 
-    entries.push({
-      section: sectionInput.value,
-      title: titleInput.value,
-      description: descriptionInput.value,
-      buttonText: buttonTextInput.value,
-      buttonLink: buttonLinkInput.value,
-      image: ""
-    });
+    saveEntry();
 
-    clearInputs();
-    renderPreview();
   }
 
 });
 
-function clearInputs() {
+function clearForm(){
+
+  sectionInput.value = "Completed";
   titleInput.value = "";
   descriptionInput.value = "";
   buttonTextInput.value = "";
   buttonLinkInput.value = "";
   imageInput.value = "";
+
 }
 
-function renderSection(sectionName) {
+document.getElementById("clearBtn").addEventListener("click",clearForm);
 
-  const filtered = entries.filter(e => e.section === sectionName);
+function renderEntryList(){
 
-  if (!filtered.length) return "";
+  const container = document.getElementById("entryList");
+
+  container.innerHTML = "";
+
+  entries.forEach((entry,index)=>{
+
+    const div = document.createElement("div");
+
+    div.className = "bg-white border border-[#e7dfd6] rounded-xl p-4";
+
+    div.innerHTML = `
+      <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+          <div class="font-medium text-[15px] mb-1">
+            ${entry.title}
+          </div>
+
+          <div class="text-[13px] text-[#7d746c]">
+            ${entry.section}
+          </div>
+
+        </div>
+
+        <div class="flex gap-2">
+
+          <button class="edit-btn" onclick="editEntry(${index})">
+            Edit
+          </button>
+
+          <button class="delete-btn" onclick="deleteEntry(${index})">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+window.editEntry = function(index){
+
+  const entry = entries[index];
+
+  sectionInput.value = entry.section;
+  titleInput.value = entry.title;
+  descriptionInput.value = entry.description;
+  buttonTextInput.value = entry.buttonText;
+  buttonLinkInput.value = entry.buttonLink;
+
+  editingIndex = index;
+
+  document.getElementById("addEntryBtn").innerText = "Save Changes";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+window.deleteEntry = function(index){
+
+  entries.splice(index,1);
+
+  renderEntryList();
+  renderPreview();
+
+}
+
+function renderSection(section){
+
+  const filtered = entries.filter(e=>e.section===section);
+
+  if(!filtered.length) return "";
 
   return `
-    <div style="margin-top:40px;">
+    <div style="margin-top:52px;">
 
       <div style="
-        font-size:20px;
-        font-family:Georgia, serif;
-        margin-bottom:8px;
+        font-size:18px;
+        letter-spacing:.12em;
+        text-transform:uppercase;
+        color:#7f9071;
+        font-weight:500;
+        margin-bottom:12px;
       ">
-        ${sectionName}
+        ${section}
       </div>
 
       <div style="
-        border-top:1px solid #c7b8a5;
+        border-top:1px solid #cdbfae;
         margin-bottom:8px;
       "></div>
 
-      ${filtered.map(entry => `
+      ${filtered.map(entry=>`
+
         <div style="
-          padding:18px 0;
-          border-top:1px solid #ece5dc;
+          border-top:1px solid #ece6de;
+          padding:22px 0;
           display:flex;
-          gap:18px;
+          gap:24px;
           justify-content:space-between;
           align-items:flex-start;
         ">
 
-          <div style="flex:1; min-width:0;">
+          <div style="flex:1;min-width:0;">
 
             <div style="
-              font-size:17px;
-              margin-bottom:6px;
-              color:#2f2a26;
-              font-weight:500;
+              font-size:18px;
+              line-height:1.4;
+              margin-bottom:8px;
+              font-family:Georgia,serif;
             ">
               ${entry.title}
             </div>
 
             <div style="
               font-size:14px;
-              line-height:1.6;
-              color:#5d544c;
-              margin-bottom:8px;
+              line-height:1.8;
+              color:#5f5751;
             ">
               ${entry.description}
             </div>
@@ -353,18 +690,19 @@ function renderSection(sectionName) {
             ${
               entry.buttonText && entry.buttonLink
               ? `
-              <a
-                href="${entry.buttonLink}"
-                target="_blank"
-                style="
-                  color:#8a7157;
-                  text-decoration:none;
-                  font-size:14px;
-                  font-weight:500;
-                "
-              >
-                ${entry.buttonText} →
-              </a>
+                <a
+                  href="${entry.buttonLink}"
+                  style="
+                    display:inline-block;
+                    margin-top:10px;
+                    color:#9b6d46;
+                    text-decoration:none;
+                    font-size:14px;
+                    font-weight:500;
+                  "
+                >
+                  ${entry.buttonText} →
+                </a>
               `
               : ""
             }
@@ -374,59 +712,70 @@ function renderSection(sectionName) {
           ${
             entry.image
             ? `
-            <a href="${entry.image}" target="_blank">
               <img
                 src="${entry.image}"
                 style="
-                  width:90px;
-                  height:90px;
+                  width:110px;
+                  height:86px;
                   object-fit:cover;
                   border-radius:8px;
-                  border:1px solid #ddd;
+                  border:1px solid #e7dfd6;
+                  flex-shrink:0;
                 "
               />
-            </a>
             `
             : ""
           }
 
         </div>
+
       `).join("")}
 
     </div>
   `;
+
 }
 
-function renderPreview() {
+function renderPreview(){
 
   previewContent.innerHTML = `
 
     ${
       logoData
       ? `
-      <img
-        src="${logoData}"
-        style="
-          max-width:220px;
-          margin-bottom:40px;
-        "
-      />
+        <img
+          src="${logoData}"
+          style="
+            width:310px;
+            margin-bottom:48px;
+          "
+        />
       `
-      : ""
+      : `
+        <div style="
+          font-size:72px;
+          font-family:'Georgia',serif;
+          margin-bottom:48px;
+          line-height:1;
+        ">
+          kiln | TECH.
+        </div>
+      `
     }
 
     <div style="
-      font-size:14px;
-      color:#8a7d72;
-      margin-bottom:32px;
+      font-size:18px;
+      color:#7f9071;
+      font-family:Georgia,serif;
+      margin-bottom:38px;
     ">
       ${dateInput.value}
     </div>
 
     <div style="
       font-size:16px;
-      margin-bottom:28px;
-      line-height:1.7;
+      line-height:1.8;
+      margin-bottom:42px;
     ">
       ${introInput.value}
     </div>
@@ -436,80 +785,54 @@ function renderPreview() {
     ${renderSection("Notes")}
 
     <div style="
-      margin-top:50px;
-      line-height:1.8;
+      margin-top:60px;
+      line-height:1.9;
+      font-size:16px;
       color:#4b433d;
     ">
       Gracias,<br><br>
-      – Porter
+      <span style="font-style:italic;">– Porter</span>
     </div>
 
   `;
+
 }
 
 renderPreview();
 
-document.getElementById("copyHtmlBtn").addEventListener("click", () => {
+document.getElementById("copyBtn").addEventListener("click",()=>{
 
   const html = `
 <!DOCTYPE html>
 <html>
-<body style="
-  background:#f6f1ea;
-  padding:40px;
-  font-family:Arial,sans-serif;
-  color:#2f2a26;
-">
-
-<div style="
-  max-width:760px;
-  margin:auto;
-  background:white;
-  padding:48px;
-">
-
+<body style="background:#f6f1ea;padding:40px;font-family:Arial,sans-serif;">
+<div style="max-width:900px;margin:auto;background:white;padding:72px;border-radius:12px;">
 ${previewContent.innerHTML}
-
 </div>
-
 </body>
 </html>
 `;
 
   navigator.clipboard.writeText(html);
 
-  alert("Email HTML copied to clipboard.");
+  alert("HTML copied to clipboard.");
 
 });
 
-document.getElementById("downloadBtn").addEventListener("click", () => {
+document.getElementById("downloadBtn").addEventListener("click",()=>{
 
   const html = `
 <!DOCTYPE html>
 <html>
-<body style="
-  background:#f6f1ea;
-  padding:40px;
-  font-family:Arial,sans-serif;
-  color:#2f2a26;
-">
-
-<div style="
-  max-width:760px;
-  margin:auto;
-  background:white;
-  padding:48px;
-">
-
+<body style="background:#f6f1ea;padding:40px;font-family:Arial,sans-serif;">
+<div style="max-width:900px;margin:auto;background:white;padding:72px;border-radius:12px;">
 ${previewContent.innerHTML}
-
 </div>
-
 </body>
 </html>
 `;
 
-  const blob = new Blob([html], { type: "text/html" });
+  const blob = new Blob([html],{type:"text/html"});
 
   const a = document.createElement("a");
 

@@ -19,7 +19,6 @@
   --outer:#e9ddd0;
   --card:#fcfaf7;
   --sage:#7d8e71;
-  --sage-light:#e5eadf;
   --brown:#a56f45;
   --text:#2c2926;
   --muted:#766d65;
@@ -112,12 +111,6 @@ textarea{
     <!-- HEADER -->
     <div class="mb-7">
 
-      <img
-        id="sidebarLogo"
-        src=""
-        class="w-[230px] mb-4 hidden"
-      />
-
       <h1 class="serif text-5xl leading-none mb-3">
         kiln<span class="mx-2">|</span>TECH.
       </h1>
@@ -130,33 +123,6 @@ textarea{
 
     <!-- PANEL -->
     <div class="bg-[#f7f3ee] border border-[#ddd2c5] rounded-xl p-6">
-
-      <!-- LOGO -->
-      <div class="mb-6">
-
-        <div class="small-label mb-2">
-          Logo
-        </div>
-
-        <label class="border border-dashed border-[#d7cdc1] rounded-xl p-5 flex flex-col items-center justify-center cursor-pointer hover:bg-[#f1ece6] transition">
-
-          <div class="text-xl mb-1">
-            ↑
-          </div>
-
-          <div class="font-medium text-sm mb-1">
-            Upload Logo
-          </div>
-
-          <div class="text-xs text-[#7d746c]">
-            PNG or JPG
-          </div>
-
-          <input type="file" id="logoInput" accept="image/*" class="hidden">
-
-        </label>
-
-      </div>
 
       <!-- DATE -->
       <div class="mb-5">
@@ -236,25 +202,6 @@ textarea{
             class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
           />
 
-          <!-- IMAGE -->
-          <label class="bg-[#edf1e7] border border-[#d8dfd0] rounded-xl p-5 flex flex-col items-center justify-center cursor-pointer hover:bg-[#e5eadf] transition">
-
-            <div class="text-xl text-[#748367] mb-1">
-              ↑
-            </div>
-
-            <div class="font-medium text-sm text-[#4d5944] mb-1">
-              Upload Image
-            </div>
-
-            <div class="text-xs text-[#76806e]">
-              JPG or PNG
-            </div>
-
-            <input type="file" id="imageInput" accept="image/*" class="hidden">
-
-          </label>
-
           <!-- BUTTONS -->
           <div class="flex gap-3 pt-1">
 
@@ -331,11 +278,6 @@ textarea{
         <span class="font-medium tracking-wide text-sm">PREVIEW</span>
       </div>
 
-      <div class="flex items-center gap-3 opacity-40">
-        <span>&lt;/&gt;</span>
-        <span class="font-medium tracking-wide text-sm">HTML</span>
-      </div>
-
     </div>
 
     <div class="email-preview max-w-[860px] mx-auto">
@@ -352,11 +294,9 @@ textarea{
 
 let entries = [];
 let editingIndex = null;
-let logoData = "";
 
 const previewContent = document.getElementById("previewContent");
 
-const logoInput = document.getElementById("logoInput");
 const dateInput = document.getElementById("dateInput");
 const introInput = document.getElementById("introInput");
 
@@ -365,7 +305,6 @@ const titleInput = document.getElementById("titleInput");
 const descriptionInput = document.getElementById("descriptionInput");
 const buttonTextInput = document.getElementById("buttonTextInput");
 const buttonLinkInput = document.getElementById("buttonLinkInput");
-const imageInput = document.getElementById("imageInput");
 
 function formattedDate(){
 
@@ -385,7 +324,6 @@ function saveDraft(){
 
   localStorage.setItem("kilnDraft", JSON.stringify({
     entries,
-    logoData,
     date: dateInput.value,
     intro: introInput.value
   }));
@@ -401,45 +339,14 @@ function loadDraft(){
   const draft = JSON.parse(saved);
 
   entries = draft.entries || [];
-  logoData = draft.logoData || "";
 
   dateInput.value = draft.date || formattedDate();
   introInput.value = draft.intro || "Hola a todos,";
-
-  if(logoData){
-
-    document.getElementById("sidebarLogo").src = logoData;
-    document.getElementById("sidebarLogo").classList.remove("hidden");
-
-  }
 
   renderEntryList();
   renderPreview();
 
 }
-
-logoInput.addEventListener("change",e=>{
-
-  const file = e.target.files[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(event){
-
-    logoData = event.target.result;
-
-    document.getElementById("sidebarLogo").src = logoData;
-    document.getElementById("sidebarLogo").classList.remove("hidden");
-
-    renderPreview();
-    saveDraft();
-
-  };
-
-  reader.readAsDataURL(file);
-
-});
 
 dateInput.addEventListener("input",()=>{
   renderPreview();
@@ -451,87 +358,33 @@ introInput.addEventListener("input",()=>{
   saveDraft();
 });
 
-function compressImage(file, callback){
-
-  const reader = new FileReader();
-
-  reader.onload = function(event){
-
-    const img = new Image();
-
-    img.onload = function(){
-
-      const canvas = document.createElement("canvas");
-
-      const maxWidth = 700;
-
-      const scale = maxWidth / img.width;
-
-      canvas.width = maxWidth;
-      canvas.height = img.height * scale;
-
-      const ctx = canvas.getContext("2d");
-
-      ctx.drawImage(img,0,0,canvas.width,canvas.height);
-
-      const compressed = canvas.toDataURL("image/jpeg",0.72);
-
-      callback(compressed);
-
-    };
-
-    img.src = event.target.result;
-
-  };
-
-  reader.readAsDataURL(file);
-
-}
-
 document.getElementById("addEntryBtn").addEventListener("click",()=>{
 
-  const saveEntry = (imageData="") => {
-
-    const entry = {
-      section:sectionInput.value,
-      title:titleInput.value,
-      description:descriptionInput.value,
-      buttonText:buttonTextInput.value,
-      buttonLink:buttonLinkInput.value,
-      image:imageData
-    };
-
-    if(editingIndex !== null){
-
-      entries[editingIndex] = entry;
-      editingIndex = null;
-
-      document.getElementById("addEntryBtn").innerText = "+ Add Entry";
-
-    } else {
-
-      entries.push(entry);
-
-    }
-
-    clearForm();
-    renderEntryList();
-    renderPreview();
-    saveDraft();
-
+  const entry = {
+    section:sectionInput.value,
+    title:titleInput.value,
+    description:descriptionInput.value,
+    buttonText:buttonTextInput.value,
+    buttonLink:buttonLinkInput.value
   };
 
-  const file = imageInput.files[0];
+  if(editingIndex !== null){
 
-  if(file){
+    entries[editingIndex] = entry;
+    editingIndex = null;
 
-    compressImage(file,saveEntry);
+    document.getElementById("addEntryBtn").innerText = "+ Add Entry";
 
   } else {
 
-    saveEntry();
+    entries.push(entry);
 
   }
+
+  clearForm();
+  renderEntryList();
+  renderPreview();
+  saveDraft();
 
 });
 
@@ -542,7 +395,6 @@ function clearForm(){
   descriptionInput.value = "";
   buttonTextInput.value = "";
   buttonLinkInput.value = "";
-  imageInput.value = "";
 
 }
 
@@ -657,67 +509,41 @@ function renderSection(section){
         <div style="
           border-top:1px solid #ece6de;
           padding:14px 0;
-          display:flex;
-          gap:18px;
-          justify-content:space-between;
-          align-items:flex-start;
         ">
 
-          <div style="flex:1;min-width:0;">
+          <div style="
+            font-size:17px;
+            line-height:1.35;
+            margin-bottom:5px;
+            font-family:Georgia,serif;
+          ">
+            ${entry.title}
+          </div>
 
-            <div style="
-              font-size:17px;
-              line-height:1.35;
-              margin-bottom:5px;
-              font-family:Georgia,serif;
-            ">
-              ${entry.title}
-            </div>
-
-            <div style="
-              font-size:14px;
-              line-height:1.55;
-              color:#5f5751;
-            ">
-              ${entry.description}
-            </div>
-
-            ${
-              entry.buttonText && entry.buttonLink
-              ? `
-                <a
-                  href="${entry.buttonLink}"
-                  style="
-                    display:inline-block;
-                    margin-top:8px;
-                    color:#9b6d46;
-                    text-decoration:none;
-                    font-size:13px;
-                    font-weight:500;
-                  "
-                >
-                  ${entry.buttonText} →
-                </a>
-              `
-              : ""
-            }
-
+          <div style="
+            font-size:14px;
+            line-height:1.55;
+            color:#5f5751;
+          ">
+            ${entry.description}
           </div>
 
           ${
-            entry.image
+            entry.buttonText && entry.buttonLink
             ? `
-              <img
-                src="${entry.image}"
+              <a
+                href="${entry.buttonLink}"
                 style="
-                  width:95px;
-                  height:74px;
-                  object-fit:cover;
-                  border-radius:7px;
-                  border:1px solid #e7dfd6;
-                  flex-shrink:0;
+                  display:inline-block;
+                  margin-top:8px;
+                  color:#9b6d46;
+                  text-decoration:none;
+                  font-size:13px;
+                  font-weight:500;
                 "
-              />
+              >
+                ${entry.buttonText} →
+              </a>
             `
             : ""
           }
@@ -735,28 +561,14 @@ function renderPreview(){
 
   previewContent.innerHTML = `
 
-    ${
-      logoData
-      ? `
-        <img
-          src="${logoData}"
-          style="
-            width:270px;
-            margin-bottom:28px;
-          "
-        />
-      `
-      : `
-        <div style="
-          font-size:54px;
-          font-family:'Georgia',serif;
-          margin-bottom:28px;
-          line-height:1;
-        ">
-          kiln | TECH.
-        </div>
-      `
-    }
+    <div style="
+      font-size:54px;
+      font-family:'Georgia',serif;
+      margin-bottom:28px;
+      line-height:1;
+    ">
+      kiln | TECH.
+    </div>
 
     <div style="
       font-size:17px;

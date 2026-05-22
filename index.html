@@ -38,7 +38,7 @@ body{
 input,
 textarea,
 select{
-  transition:.2s ease;
+  transition:.18s ease;
 }
 
 input:focus,
@@ -57,19 +57,19 @@ textarea{
   background:var(--card);
   border:1px solid #ddd2c5;
   border-radius:12px;
-  padding:52px;
+  padding:40px;
 }
 
 .small-label{
-  font-size:11px;
-  letter-spacing:.1em;
+  font-size:10px;
+  letter-spacing:.14em;
   text-transform:uppercase;
   color:#726962;
   font-weight:600;
 }
 
 .action-btn{
-  transition:.2s ease;
+  transition:.18s ease;
 }
 
 .action-btn:hover{
@@ -102,31 +102,29 @@ textarea{
 </style>
 </head>
 
-<body class="min-h-screen px-6 py-7">
+<body class="min-h-screen px-5 py-5">
 
-<div class="max-w-[1500px] mx-auto grid grid-cols-1 xl:grid-cols-[360px_1fr] gap-8">
+<div class="max-w-[1450px] mx-auto grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-7">
 
   <!-- LEFT PANEL -->
   <div>
 
-    <!-- HEADER -->
-    <div class="mb-7">
+    <div class="mb-5">
 
-      <h1 class="serif text-5xl leading-none mb-3">
+      <h1 class="serif text-5xl leading-none mb-2">
         kiln<span class="mx-2">|</span>TECH.
       </h1>
 
-      <div class="tracking-[0.22em] uppercase text-[11px] text-[#766d65]">
+      <div class="tracking-[0.22em] uppercase text-[10px] text-[#766d65]">
         Daily Update Generator
       </div>
 
     </div>
 
-    <!-- PANEL -->
-    <div class="bg-[#f7f3ee] border border-[#ddd2c5] rounded-xl p-6">
+    <div class="bg-[#f7f3ee] border border-[#ddd2c5] rounded-xl p-5">
 
       <!-- DATE -->
-      <div class="mb-5">
+      <div class="mb-4">
 
         <div class="small-label mb-2">
           Date
@@ -135,13 +133,13 @@ textarea{
         <input
           id="dateInput"
           type="text"
-          class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+          class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
         />
 
       </div>
 
       <!-- INTRO -->
-      <div class="mb-6">
+      <div class="mb-5">
 
         <div class="small-label mb-2">
           Intro
@@ -150,25 +148,25 @@ textarea{
         <textarea
           id="introInput"
           rows="2"
-          class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+          class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
         >Hola a todos,</textarea>
 
       </div>
 
-      <div class="border-t border-[#ddd2c5] my-6"></div>
+      <div class="border-t border-[#ddd2c5] my-5"></div>
 
       <!-- ENTRY -->
       <div>
 
-        <div class="small-label mb-4">
+        <div class="small-label mb-3">
           Add Entry
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-3">
 
           <select
             id="sectionInput"
-            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
           >
             <option>Completed</option>
             <option>In Progress</option>
@@ -179,28 +177,28 @@ textarea{
             id="titleInput"
             type="text"
             placeholder="Entry title"
-            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
           />
 
           <textarea
             id="descriptionInput"
             rows="3"
             placeholder="Brief explanation..."
-            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
           ></textarea>
 
           <input
             id="buttonTextInput"
             type="text"
             placeholder="Link text"
-            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
           />
 
           <input
             id="buttonLinkInput"
             type="text"
             placeholder="Link URL"
-            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-3 text-[14px]"
+            class="w-full bg-white border border-[#ddd2c5] rounded-xl px-4 py-2.5 text-[13px]"
           />
 
           <!-- BUTTONS -->
@@ -208,14 +206,14 @@ textarea{
 
             <button
               id="addEntryBtn"
-              class="flex-1 bg-[#7d8e71] hover:bg-[#708063] text-white py-3 rounded-xl action-btn text-[14px] font-medium"
+              class="flex-1 bg-[#7d8e71] hover:bg-[#708063] text-white py-2.5 rounded-xl action-btn text-[13px] font-medium"
             >
               + Add Entry
             </button>
 
             <button
               id="clearBtn"
-              class="px-5 border border-[#ddd2c5] rounded-xl hover:bg-[#f1ece6] transition text-[14px]"
+              class="px-5 border border-[#ddd2c5] rounded-xl hover:bg-[#f1ece6] transition text-[13px]"
             >
               Clear
             </button>
@@ -227,36 +225,36 @@ textarea{
       </div>
 
       <!-- ENTRY LIST -->
-      <div id="entryList" class="mt-7 space-y-2"></div>
+      <div id="entryList" class="mt-5 space-y-2"></div>
 
-      <div class="border-t border-[#ddd2c5] my-6"></div>
+      <div class="border-t border-[#ddd2c5] my-5"></div>
 
       <!-- EXPORT -->
       <div>
 
-        <div class="small-label mb-4">
+        <div class="small-label mb-3">
           Export
         </div>
 
-        <div class="space-y-3">
+        <div class="space-y-2.5">
 
           <button
             id="copyBtn"
-            class="w-full bg-[#a56f45] hover:bg-[#94613b] text-white py-3 rounded-xl action-btn text-[14px] font-medium"
+            class="w-full bg-[#a56f45] hover:bg-[#94613b] text-white py-2.5 rounded-xl action-btn text-[13px] font-medium"
           >
             Copy HTML
           </button>
 
           <button
             id="downloadBtn"
-            class="w-full border border-[#d8c7b7] hover:bg-[#f2ece5] py-3 rounded-xl action-btn text-[14px] font-medium text-[#8c603c]"
+            class="w-full border border-[#d8c7b7] hover:bg-[#f2ece5] py-2.5 rounded-xl action-btn text-[13px] font-medium text-[#8c603c]"
           >
             Download HTML
           </button>
 
           <button
             id="clearDraftBtn"
-            class="w-full border border-[#e0d3c7] hover:bg-[#f3ebe3] py-3 rounded-xl text-[14px]"
+            class="w-full border border-[#e0d3c7] hover:bg-[#f3ebe3] py-2.5 rounded-xl text-[13px]"
           >
             Clear Draft
           </button>
@@ -272,16 +270,16 @@ textarea{
   <!-- PREVIEW -->
   <div>
 
-    <div class="flex items-center justify-center gap-12 mb-5">
+    <div class="flex items-center justify-center gap-12 mb-4">
 
       <div class="flex items-center gap-3 border-b-2 border-[#7d8e71] pb-2 px-4">
         <span>◉</span>
-        <span class="font-medium tracking-wide text-sm">PREVIEW</span>
+        <span class="font-medium tracking-wide text-xs">PREVIEW</span>
       </div>
 
     </div>
 
-    <div class="email-preview max-w-[860px] mx-auto">
+    <div class="email-preview max-w-[980px] mx-auto">
 
       <div id="previewContent"></div>
 
@@ -319,8 +317,6 @@ function formattedDate(){
 
 }
 
-dateInput.value = formattedDate();
-
 function saveDraft(){
 
   localStorage.setItem("kilnDraft", JSON.stringify({
@@ -345,49 +341,339 @@ function loadDraft(){
   introInput.value = draft.intro || "Hola a todos,";
 
   renderEntryList();
-  renderPreview();
 
 }
 
-dateInput.addEventListener("input",()=>{
-  renderPreview();
-  saveDraft();
-});
+function formatTitle(title){
 
-introInput.addEventListener("input",()=>{
-  renderPreview();
-  saveDraft();
-});
+  return title.replace(
+    /#(\d+)/g,
+    `<span style="
+      display:inline-block;
+      background:#efe7dc;
+      color:#7b6857;
+      border-radius:999px;
+      padding:1px 7px;
+      font-size:11px;
+      font-family:Inter,sans-serif;
+      margin-right:5px;
+      vertical-align:middle;
+    ">#$1</span>`
+  );
 
-document.getElementById("addEntryBtn").addEventListener("click",()=>{
+}
 
-  const entry = {
-    section:sectionInput.value,
-    title:titleInput.value,
-    description:descriptionInput.value,
-    buttonText:buttonTextInput.value,
-    buttonLink:buttonLinkInput.value
-  };
+function renderStats(){
 
-  if(editingIndex !== null){
+  const completed = entries.filter(e=>e.section==="Completed").length;
+  const progress = entries.filter(e=>e.section==="In Progress").length;
+  const notes = entries.filter(e=>e.section==="Notes").length;
 
-    entries[editingIndex] = entry;
-    editingIndex = null;
+  return `
+    <div style="
+      display:flex;
+      gap:7px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    ">
 
-    document.getElementById("addEntryBtn").innerText = "+ Add Entry";
+      <div style="
+        background:#edf1e7;
+        color:#617053;
+        padding:4px 9px;
+        border-radius:999px;
+        font-size:10px;
+        font-weight:600;
+      ">
+        ${completed} Completed
+      </div>
 
-  } else {
+      <div style="
+        background:#efe7dc;
+        color:#7c6754;
+        padding:4px 9px;
+        border-radius:999px;
+        font-size:10px;
+        font-weight:600;
+      ">
+        ${progress} In Progress
+      </div>
 
-    entries.push(entry);
+      <div style="
+        background:#f3e8e4;
+        color:#8b6358;
+        padding:4px 9px;
+        border-radius:999px;
+        font-size:10px;
+        font-weight:600;
+      ">
+        ${notes} Notes
+      </div>
+
+    </div>
+  `;
+
+}
+
+function renderCard(entry, bg, border){
+
+  return `
+    <div style="
+      background:${bg};
+      border:1px solid ${border};
+      border-radius:9px;
+      padding:11px 13px;
+    ">
+
+      <div style="
+        font-size:14px;
+        line-height:1.25;
+        margin-bottom:3px;
+        font-family:Georgia,serif;
+      ">
+        ${formatTitle(entry.title)}
+      </div>
+
+      <div style="
+        font-size:12px;
+        line-height:1.42;
+        color:#5f5751;
+      ">
+        ${entry.description}
+      </div>
+
+      ${
+        entry.buttonText && entry.buttonLink
+        ? `
+          <a
+            href="${entry.buttonLink}"
+            style="
+              display:inline-block;
+              margin-top:5px;
+              color:#9b6d46;
+              text-decoration:none;
+              font-size:11px;
+              font-weight:500;
+            "
+          >
+            ${entry.buttonText} ↗
+          </a>
+        `
+        : ""
+      }
+
+    </div>
+  `;
+
+}
+
+function renderSection(section){
+
+  const filtered = entries.filter(e=>e.section===section);
+
+  if(!filtered.length) return "";
+
+  let bg = "#f9f6f2";
+  let border = "#e7ddd2";
+
+  if(section === "Completed"){
+    bg = "#eef3ea";
+    border = "#d7e1cf";
+  }
+
+  if(section === "In Progress"){
+    bg = "#f4ede4";
+    border = "#e5d7c7";
+  }
+
+  if(section === "Notes"){
+    bg = "#f3e8e4";
+    border = "#e2d0ca";
+  }
+
+  const isNotes = section === "Notes";
+
+  if(isNotes){
+
+    return `
+      <div style="margin-top:14px;">
+
+        <div style="
+          font-size:12px;
+          letter-spacing:.14em;
+          text-transform:uppercase;
+          color:#7d8e71;
+          font-weight:600;
+          margin-bottom:6px;
+        ">
+          ${section}
+        </div>
+
+        ${filtered.map(entry=>`
+
+          <div style="
+            background:${bg};
+            border:1px solid ${border};
+            border-radius:9px;
+            padding:11px 13px;
+            margin-top:7px;
+          ">
+
+            <div style="
+              font-size:14px;
+              line-height:1.25;
+              margin-bottom:3px;
+              font-family:Georgia,serif;
+            ">
+              ${formatTitle(entry.title)}
+            </div>
+
+            <div style="
+              font-size:12px;
+              line-height:1.42;
+              color:#5f5751;
+            ">
+              ${entry.description}
+            </div>
+
+            ${
+              entry.buttonText && entry.buttonLink
+              ? `
+                <a
+                  href="${entry.buttonLink}"
+                  style="
+                    display:inline-block;
+                    margin-top:5px;
+                    color:#9b6d46;
+                    text-decoration:none;
+                    font-size:11px;
+                    font-weight:500;
+                  "
+                >
+                  ${entry.buttonText} ↗
+                </a>
+              `
+              : ""
+            }
+
+          </div>
+
+        `).join("")}
+
+      </div>
+    `;
 
   }
 
-  clearForm();
-  renderEntryList();
-  renderPreview();
-  saveDraft();
+  let rows = "";
 
-});
+  for(let i = 0; i < filtered.length; i += 2){
+
+    const left = filtered[i];
+    const right = filtered[i + 1];
+
+    rows += `
+      <tr>
+
+        <td valign="top" width="50%" style="padding:4px;">
+
+          ${renderCard(left, bg, border)}
+
+        </td>
+
+        <td valign="top" width="50%" style="padding:4px;">
+
+          ${
+            right
+            ? renderCard(right, bg, border)
+            : ""
+          }
+
+        </td>
+
+      </tr>
+    `;
+
+  }
+
+  return `
+    <div style="margin-top:14px;">
+
+      <div style="
+        font-size:12px;
+        letter-spacing:.14em;
+        text-transform:uppercase;
+        color:#7d8e71;
+        font-weight:600;
+        margin-bottom:6px;
+      ">
+        ${section}
+      </div>
+
+      <table
+        role="presentation"
+        width="100%"
+        cellspacing="0"
+        cellpadding="0"
+        border="0"
+      >
+        ${rows}
+      </table>
+
+    </div>
+  `;
+
+}
+
+function renderPreview(){
+
+  previewContent.innerHTML = `
+
+    <div style="
+      font-size:44px;
+      font-family:'Georgia',serif;
+      margin-bottom:14px;
+      line-height:1;
+    ">
+      kiln | TECH.
+    </div>
+
+    <div style="
+      font-size:14px;
+      color:#7d8e71;
+      font-family:Georgia,serif;
+      margin-bottom:10px;
+    ">
+      ${dateInput.value}
+    </div>
+
+    <div style="
+      font-size:13px;
+      line-height:1.5;
+      margin-bottom:10px;
+    ">
+      ${introInput.value}
+    </div>
+
+    ${renderStats()}
+
+    ${renderSection("Completed")}
+    ${renderSection("In Progress")}
+    ${renderSection("Notes")}
+
+    <div style="
+      margin-top:14px;
+      line-height:1.45;
+      font-size:13px;
+      color:#4b433d;
+    ">
+      Gracias,<br><br>
+      <span style="font-style:italic;">– Porter</span>
+    </div>
+
+  `;
+
+}
 
 function clearForm(){
 
@@ -399,8 +685,6 @@ function clearForm(){
 
 }
 
-document.getElementById("clearBtn").addEventListener("click",clearForm);
-
 function renderEntryList(){
 
   const container = document.getElementById("entryList");
@@ -411,18 +695,18 @@ function renderEntryList(){
 
     const div = document.createElement("div");
 
-    div.className = "bg-white border border-[#e7dfd6] rounded-xl p-3";
+    div.className = "bg-white border border-[#e7dfd6] rounded-xl p-2.5";
 
     div.innerHTML = `
       <div class="flex items-start justify-between gap-3">
 
         <div>
 
-          <div class="font-medium text-[14px] mb-1">
+          <div class="font-medium text-[13px] mb-0.5">
             ${entry.title}
           </div>
 
-          <div class="text-[12px] text-[#7d746c]">
+          <div class="text-[11px] text-[#7d746c]">
             ${entry.section}
           </div>
 
@@ -480,226 +764,55 @@ window.deleteEntry = function(index){
 
 }
 
-function formatTitle(title){
+dateInput.addEventListener("input",()=>{
+  renderPreview();
+  saveDraft();
+});
 
-  return title.replace(
-    /#(\d+)/g,
-    '<span style="
-      display:inline-block;
-      background:#efe7dc;
-      color:#7b6857;
-      border-radius:999px;
-      padding:2px 8px;
-      font-size:12px;
-      font-family:Inter,sans-serif;
-      margin-right:6px;
-      vertical-align:middle;
-    ">#$1</span>'
-  );
+introInput.addEventListener("input",()=>{
+  renderPreview();
+  saveDraft();
+});
 
-}
+document.getElementById("addEntryBtn").addEventListener("click",()=>{
 
-function renderStats(){
+  const entry = {
+    section:sectionInput.value,
+    title:titleInput.value,
+    description:descriptionInput.value,
+    buttonText:buttonTextInput.value,
+    buttonLink:buttonLinkInput.value
+  };
 
-  const completed = entries.filter(e=>e.section==="Completed").length;
-  const progress = entries.filter(e=>e.section==="In Progress").length;
-  const notes = entries.filter(e=>e.section==="Notes").length;
+  if(editingIndex !== null){
 
-  return `
-    <div style="
-      display:flex;
-      gap:12px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-    ">
+    entries[editingIndex] = entry;
+    editingIndex = null;
 
-      <div style="
-        background:#edf1e7;
-        color:#617053;
-        padding:7px 12px;
-        border-radius:999px;
-        font-size:12px;
-        font-weight:600;
-      ">
-        ${completed} Completed
-      </div>
+    document.getElementById("addEntryBtn").innerText = "+ Add Entry";
 
-      <div style="
-        background:#efe7dc;
-        color:#7c6754;
-        padding:7px 12px;
-        border-radius:999px;
-        font-size:12px;
-        font-weight:600;
-      ">
-        ${progress} In Progress
-      </div>
+  } else {
 
-      <div style="
-        background:#f4ece4;
-        color:#8b735e;
-        padding:7px 12px;
-        border-radius:999px;
-        font-size:12px;
-        font-weight:600;
-      ">
-        ${notes} Notes
-      </div>
+    entries.push(entry);
 
-    </div>
-  `;
+  }
 
-}
+  clearForm();
+  renderEntryList();
+  renderPreview();
+  saveDraft();
 
-function renderSection(section){
+});
 
-  const filtered = entries.filter(e=>e.section===section);
-
-  if(!filtered.length) return "";
-
-  return `
-    <div style="margin-top:24px;">
-
-      <div style="
-        font-size:15px;
-        letter-spacing:.12em;
-        text-transform:uppercase;
-        color:#7d8e71;
-        font-weight:600;
-        margin-bottom:10px;
-      ">
-        ${section}
-      </div>
-
-      <div style="
-        border-top:1px solid #cdbfae;
-        margin-bottom:4px;
-      "></div>
-
-      ${filtered.map(entry=>`
-
-        <div style="
-          border-top:1px solid #ece6de;
-          padding:14px 0 14px 14px;
-          border-left:2px solid #d8c8b7;
-        ">
-
-          <div style="
-            font-size:17px;
-            line-height:1.35;
-            margin-bottom:5px;
-            font-family:Georgia,serif;
-          ">
-            ${formatTitle(entry.title)}
-          </div>
-
-          <div style="
-            font-size:14px;
-            line-height:1.55;
-            color:#5f5751;
-          ">
-            ${entry.description}
-          </div>
-
-          ${
-            entry.buttonText && entry.buttonLink
-            ? `
-              <a
-                href="${entry.buttonLink}"
-                style="
-                  display:inline-block;
-                  margin-top:8px;
-                  color:#9b6d46;
-                  text-decoration:none;
-                  font-size:13px;
-                  font-weight:500;
-                  transition:.2s ease;
-                "
-              >
-                ${entry.buttonText} ↗
-              </a>
-            `
-            : ""
-          }
-
-        </div>
-
-      `).join("")}
-
-    </div>
-  `;
-
-}
-
-function renderPreview(){
-
-  previewContent.innerHTML = `
-
-    <div style="
-      font-size:54px;
-      font-family:'Georgia',serif;
-      margin-bottom:28px;
-      line-height:1;
-    ">
-      kiln | TECH.
-    </div>
-
-    <div style="
-      font-size:17px;
-      color:#7d8e71;
-      font-family:Georgia,serif;
-      margin-bottom:20px;
-    ">
-      ${dateInput.value}
-    </div>
-
-    <div style="
-      font-size:15px;
-      line-height:1.7;
-      margin-bottom:18px;
-    ">
-      ${introInput.value}
-    </div>
-
-    ${renderStats()}
-
-    ${renderSection("Completed")}
-    ${renderSection("In Progress")}
-
-    <div style="
-      background:#f4eee7;
-      border:1px solid #e2d7ca;
-      border-radius:10px;
-      padding:4px 18px 14px 18px;
-      margin-top:22px;
-    ">
-      ${renderSection("Notes")}
-    </div>
-
-    <div style="
-      margin-top:24px;
-      line-height:1.8;
-      font-size:15px;
-      color:#4b433d;
-    ">
-      Gracias,<br><br>
-      <span style="font-style:italic;">– Porter</span>
-    </div>
-
-  `;
-
-}
-
-loadDraft();
-renderPreview();
+document.getElementById("clearBtn").addEventListener("click",clearForm);
 
 document.getElementById("copyBtn").addEventListener("click",()=>{
 
   const html = `
 <!DOCTYPE html>
 <html>
-<body style="background:#e9ddd0;padding:32px;font-family:Arial,sans-serif;">
-<div style="max-width:860px;margin:auto;background:#fcfaf7;padding:52px;border-radius:12px;">
+<body style="background:#e9ddd0;padding:24px;font-family:Arial,sans-serif;">
+<div style="max-width:980px;margin:auto;background:#fcfaf7;padding:40px;border-radius:12px;">
 ${previewContent.innerHTML}
 </div>
 </body>
@@ -717,8 +830,8 @@ document.getElementById("downloadBtn").addEventListener("click",()=>{
   const html = `
 <!DOCTYPE html>
 <html>
-<body style="background:#e9ddd0;padding:32px;font-family:Arial,sans-serif;">
-<div style="max-width:860px;margin:auto;background:#fcfaf7;padding:52px;border-radius:12px;">
+<body style="background:#e9ddd0;padding:24px;font-family:Arial,sans-serif;">
+<div style="max-width:980px;margin:auto;background:#fcfaf7;padding:40px;border-radius:12px;">
 ${previewContent.innerHTML}
 </div>
 </body>
@@ -748,6 +861,14 @@ document.getElementById("clearDraftBtn").addEventListener("click",()=>{
   location.reload();
 
 });
+
+loadDraft();
+
+if(!dateInput.value){
+  dateInput.value = formattedDate();
+}
+
+renderPreview();
 
 </script>
 

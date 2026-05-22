@@ -74,6 +74,7 @@ textarea{
 
 .action-btn:hover{
   transform:translateY(-1px);
+  opacity:.92;
 }
 
 .edit-btn{
@@ -479,6 +480,77 @@ window.deleteEntry = function(index){
 
 }
 
+function formatTitle(title){
+
+  return title.replace(
+    /#(\d+)/g,
+    '<span style="
+      display:inline-block;
+      background:#efe7dc;
+      color:#7b6857;
+      border-radius:999px;
+      padding:2px 8px;
+      font-size:12px;
+      font-family:Inter,sans-serif;
+      margin-right:6px;
+      vertical-align:middle;
+    ">#$1</span>'
+  );
+
+}
+
+function renderStats(){
+
+  const completed = entries.filter(e=>e.section==="Completed").length;
+  const progress = entries.filter(e=>e.section==="In Progress").length;
+  const notes = entries.filter(e=>e.section==="Notes").length;
+
+  return `
+    <div style="
+      display:flex;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    ">
+
+      <div style="
+        background:#edf1e7;
+        color:#617053;
+        padding:7px 12px;
+        border-radius:999px;
+        font-size:12px;
+        font-weight:600;
+      ">
+        ${completed} Completed
+      </div>
+
+      <div style="
+        background:#efe7dc;
+        color:#7c6754;
+        padding:7px 12px;
+        border-radius:999px;
+        font-size:12px;
+        font-weight:600;
+      ">
+        ${progress} In Progress
+      </div>
+
+      <div style="
+        background:#f4ece4;
+        color:#8b735e;
+        padding:7px 12px;
+        border-radius:999px;
+        font-size:12px;
+        font-weight:600;
+      ">
+        ${notes} Notes
+      </div>
+
+    </div>
+  `;
+
+}
+
 function renderSection(section){
 
   const filtered = entries.filter(e=>e.section===section);
@@ -508,7 +580,8 @@ function renderSection(section){
 
         <div style="
           border-top:1px solid #ece6de;
-          padding:14px 0;
+          padding:14px 0 14px 14px;
+          border-left:2px solid #d8c8b7;
         ">
 
           <div style="
@@ -517,7 +590,7 @@ function renderSection(section){
             margin-bottom:5px;
             font-family:Georgia,serif;
           ">
-            ${entry.title}
+            ${formatTitle(entry.title)}
           </div>
 
           <div style="
@@ -540,9 +613,10 @@ function renderSection(section){
                   text-decoration:none;
                   font-size:13px;
                   font-weight:500;
+                  transition:.2s ease;
                 "
               >
-                ${entry.buttonText} →
+                ${entry.buttonText} ↗
               </a>
             `
             : ""
@@ -587,9 +661,20 @@ function renderPreview(){
       ${introInput.value}
     </div>
 
+    ${renderStats()}
+
     ${renderSection("Completed")}
     ${renderSection("In Progress")}
-    ${renderSection("Notes")}
+
+    <div style="
+      background:#f4eee7;
+      border:1px solid #e2d7ca;
+      border-radius:10px;
+      padding:4px 18px 14px 18px;
+      margin-top:22px;
+    ">
+      ${renderSection("Notes")}
+    </div>
 
     <div style="
       margin-top:24px;

@@ -118,7 +118,7 @@ textarea{
         class="w-[230px] mb-4 hidden"
       />
 
-      <h1 class="serif text-6xl leading-none mb-3">
+      <h1 class="serif text-5xl leading-none mb-3">
         kiln<span class="mx-2">|</span>TECH.
       </h1>
 
@@ -306,6 +306,13 @@ textarea{
             Download HTML
           </button>
 
+          <button
+            id="clearDraftBtn"
+            class="w-full border border-[#e0d3c7] hover:bg-[#f3ebe3] py-3 rounded-xl text-[14px]"
+          >
+            Clear Draft
+          </button>
+
         </div>
 
       </div>
@@ -374,6 +381,43 @@ function formattedDate(){
 
 dateInput.value = formattedDate();
 
+function saveDraft(){
+
+  localStorage.setItem("kilnDraft", JSON.stringify({
+    entries,
+    logoData,
+    date: dateInput.value,
+    intro: introInput.value
+  }));
+
+}
+
+function loadDraft(){
+
+  const saved = localStorage.getItem("kilnDraft");
+
+  if(!saved) return;
+
+  const draft = JSON.parse(saved);
+
+  entries = draft.entries || [];
+  logoData = draft.logoData || "";
+
+  dateInput.value = draft.date || formattedDate();
+  introInput.value = draft.intro || "Hola a todos,";
+
+  if(logoData){
+
+    document.getElementById("sidebarLogo").src = logoData;
+    document.getElementById("sidebarLogo").classList.remove("hidden");
+
+  }
+
+  renderEntryList();
+  renderPreview();
+
+}
+
 logoInput.addEventListener("change",e=>{
 
   const file = e.target.files[0];
@@ -389,11 +433,22 @@ logoInput.addEventListener("change",e=>{
     document.getElementById("sidebarLogo").classList.remove("hidden");
 
     renderPreview();
+    saveDraft();
 
   };
 
   reader.readAsDataURL(file);
 
+});
+
+dateInput.addEventListener("input",()=>{
+  renderPreview();
+  saveDraft();
+});
+
+introInput.addEventListener("input",()=>{
+  renderPreview();
+  saveDraft();
 });
 
 function compressImage(file, callback){
@@ -462,6 +517,7 @@ document.getElementById("addEntryBtn").addEventListener("click",()=>{
     clearForm();
     renderEntryList();
     renderPreview();
+    saveDraft();
 
   };
 
@@ -567,6 +623,7 @@ window.deleteEntry = function(index){
 
   renderEntryList();
   renderPreview();
+  saveDraft();
 
 }
 
@@ -577,7 +634,7 @@ function renderSection(section){
   if(!filtered.length) return "";
 
   return `
-    <div style="margin-top:34px;">
+    <div style="margin-top:24px;">
 
       <div style="
         font-size:15px;
@@ -685,15 +742,15 @@ function renderPreview(){
           src="${logoData}"
           style="
             width:270px;
-            margin-bottom:32px;
+            margin-bottom:28px;
           "
         />
       `
       : `
         <div style="
-          font-size:62px;
+          font-size:54px;
           font-family:'Georgia',serif;
-          margin-bottom:32px;
+          margin-bottom:28px;
           line-height:1;
         ">
           kiln | TECH.
@@ -705,7 +762,7 @@ function renderPreview(){
       font-size:17px;
       color:#7d8e71;
       font-family:Georgia,serif;
-      margin-bottom:24px;
+      margin-bottom:20px;
     ">
       ${dateInput.value}
     </div>
@@ -713,7 +770,7 @@ function renderPreview(){
     <div style="
       font-size:15px;
       line-height:1.7;
-      margin-bottom:28px;
+      margin-bottom:18px;
     ">
       ${introInput.value}
     </div>
@@ -723,7 +780,7 @@ function renderPreview(){
     ${renderSection("Notes")}
 
     <div style="
-      margin-top:38px;
+      margin-top:24px;
       line-height:1.8;
       font-size:15px;
       color:#4b433d;
@@ -736,6 +793,7 @@ function renderPreview(){
 
 }
 
+loadDraft();
 renderPreview();
 
 document.getElementById("copyBtn").addEventListener("click",()=>{
@@ -779,6 +837,18 @@ ${previewContent.innerHTML}
   a.download = "kiln-tech-update.html";
 
   a.click();
+
+});
+
+document.getElementById("clearDraftBtn").addEventListener("click",()=>{
+
+  const confirmed = confirm("Clear saved draft?");
+
+  if(!confirmed) return;
+
+  localStorage.removeItem("kilnDraft");
+
+  location.reload();
 
 });
 
